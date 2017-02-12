@@ -30,6 +30,21 @@
      ]
  };
 
+var albumMallory = {
+    title: 'The Dreamer',
+    artist: 'Lee Marie',
+    label: 'American',
+    year:'1992',
+    albumArtUrl: 'assets/images/album_covers/09.png',
+     songs: [
+         { title: 'Napa Valley Cruising!', duration: '1:45' },
+         { title: 'Rocky Mountain Climbing', duration: '3:01' },
+         { title: 'Indiana Leaving', duration: '6:21'},
+         { title: 'Whats Next?', duration: '1:14' },
+         { title: 'We Will Wait And See', duration: '7:15'}
+     ]
+};
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -42,24 +57,23 @@
      return template;
  };
 
- var setCurrentAlbum = function(album) {
-     // #1
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
      var albumImage = document.getElementsByClassName('album-cover-art')[0];
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
-     // #2
+
+ var setCurrentAlbum = function(album) {
+    
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
      albumImage.setAttribute('src', album.albumArtUrl);
  
-     // #3
+   
      albumSongList.innerHTML = '';
  
-     // #4
+    
      for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
@@ -67,4 +81,14 @@
  
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+     
+     var albums = [albumPicasso, albumMarconi, albumMallory];
+     var index = 1;
+     albumImage.addEventListener("click", function(event) {
+         setCurrentAlbum(albums[index]);
+         index++;
+         if(index == albums.length) {
+             index = 0;
+         }
+     });
  };
